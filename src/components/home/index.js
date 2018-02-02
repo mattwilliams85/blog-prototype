@@ -43,58 +43,62 @@ export class Home extends Component {
     return (
       <div className='Home--root'>
         <div className='column posts'>
-          <h1>BLOG POSTS</h1>
-          
-          <div>
-            {Object.keys(activeTags).length ? `Active Tags: ` : ''}
-            {Object.values(activeTags).map((tag, i) => 
-              <span key={i} onClick={toggleTag.bind(this, tag)} className='tag'>#{tag}
-            </span>)}
-          </div>
-          
-          {posts.map(post => {
-            const { id, title, body, tags, creationTime } = post
+          <div className='content'>
+            <h1>BLOG POSTS</h1>
             
-            return (
-              <div key={id} className={`post ${isHidden(tags)}`}>
-                <div className='date'>{moment(creationTime).format('MM/DD')}</div>
-                <h3>{title}</h3>
-                <div dangerouslySetInnerHTML={{__html: body}} />
-                <div className="footer">
-                  <div className='tags'>
-                    {tags.map((tag, i) => <span key={i} onClick={toggleTag.bind(this, tag)} className='tag'>#{tag}</span>)}
-                  </div>
-                  <div onClick={toggleFavorite.bind(this, post)} id={`test-${id}`} style={{position: 'relative'}}>
-                    <Burst isActive={!favorites[id]} parent={`#test-${id}`}/>
-                    <i className={`material-icons ${favorites[id] ? 'fav' : ''}`}>favorite</i>
+            <div>
+              {Object.keys(activeTags).length ? `Active Tags:  ` : ''}
+              {Object.values(activeTags).map((tag, i) => 
+                <span key={i} onClick={toggleTag.bind(this, tag)} className='tag'>#{tag}
+              </span>)}
+            </div>
+            
+            {posts.map(post => {
+              const { id, title, body, tags, creationTime } = post
+              
+              return (
+                <div key={id} className={`post ${isHidden(tags)}`}>
+                  <div className='date'>{moment(creationTime).format('MM/DD')}</div>
+                  <h3>{title}</h3>
+                  <div dangerouslySetInnerHTML={{__html: body}} />
+                  <div className="footer">
+                    <div className='tags'>
+                      {tags.map((tag, i) => <span key={i} onClick={toggleTag.bind(this, tag)} className='tag'>#{tag}</span>)}
+                    </div>
+                    <div onClick={toggleFavorite.bind(this, post)} id={`test-${id}`} style={{position: 'relative'}}>
+                      <Burst isActive={!favorites[id]} parent={`#test-${id}`}/>
+                      <i className={`material-icons ${favorites[id] ? 'fav' : ''}`}>favorite</i>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
 
         <div className='column favorites'>
-          <h1>FAVORITES</h1>
-          {Object.values(favorites).map(post => {
-            const { id, title, body, tags, creationTime } = post
+          <div className='content'>
+            <h1>FAVORITES</h1>
+            {Object.values(favorites).map(post => {
+              const { id, title, body, tags, creationTime } = post
 
-            return (
-              <div key={id} className='post'>
-                <h3>{title}</h3>
-                <div>Created on: {moment(creationTime).format('MMM Do')}</div>
-                <div dangerouslySetInnerHTML={{ __html: body }} />
-                <div className="footer">
-                  <div className='tags'>
-                    {tags.map((tag, i) => <span key={i} className='tag'>#{tag}</span>)}
-                  </div>
-                  <div onClick={toggleFavorite.bind(this, post)}>
-                    <i className="material-icons fav">favorite</i>
+              return (
+                <div key={id} className='post'>
+                  <h3>{title}</h3>
+                  <div>Created on: {moment(creationTime).format('MMM Do')}</div>
+                  <div dangerouslySetInnerHTML={{ __html: body }} />
+                  <div className="footer">
+                    <div className='tags'>
+                      {tags.map((tag, i) => <span key={i} className='tag'>#{tag}</span>)}
+                    </div>
+                    <div onClick={toggleFavorite.bind(this, post)}>
+                      <i className="material-icons fav">favorite</i>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
         </div>
       </div>
     )
