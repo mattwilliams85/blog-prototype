@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import sanitizeHtml from 'sanitize-html'
 import moment from 'moment'
+import Burst from '../burst'
 
 export class Home extends Component {
   componentWillMount () {
@@ -40,14 +40,11 @@ export class Home extends Component {
     const { posts } = this.props
     const { favorites, activeTags } = this.state
 
-    function sanitizeMarkup (html) {
-      return { __html: sanitizeHtml(html) }
-    }
-
     return (
       <div className='Home--root'>
         <div className='column posts'>
           <h1>BLOG POSTS</h1>
+          
           <div>
             {Object.keys(activeTags).length ? `Active Tags: ` : ''}
             {Object.values(activeTags).map((tag, i) => 
@@ -67,7 +64,8 @@ export class Home extends Component {
                   <div className='tags'>
                     {tags.map((tag, i) => <span key={i} onClick={toggleTag.bind(this, tag)} className='tag'>#{tag}</span>)}
                   </div>
-                  <div onClick={toggleFavorite.bind(this, post)}>
+                  <div onClick={toggleFavorite.bind(this, post)} id={`test-${id}`} style={{position: 'relative'}}>
+                    <Burst isActive={!favorites[id]} parent={`#test-${id}`}/>
                     <i className={`material-icons ${favorites[id] ? 'fav' : ''}`}>favorite</i>
                   </div>
                 </div>
@@ -85,7 +83,7 @@ export class Home extends Component {
               <div key={id} className='post'>
                 <h3>{title}</h3>
                 <div>Created on: {moment(creationTime).format('MMM Do')}</div>
-                <div dangerouslySetInnerHTML={sanitizeMarkup(body)} />
+                <div dangerouslySetInnerHTML={{ __html: body }} />
                 <div className="footer">
                   <div className='tags'>
                     {tags.map((tag, i) => <span key={i} className='tag'>#{tag}</span>)}
