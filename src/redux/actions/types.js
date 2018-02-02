@@ -1,2 +1,2 @@
-export const INCREMENT_REQUESTED = 'counter/INCREMENT_REQUESTED'
+export const FETCH_POSTS_SUCCESS = 'FETCH_POSTS_SUCCESS'
 export const INCREMENT = 'counter/INCREMENT'

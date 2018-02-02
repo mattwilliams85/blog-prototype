@@ -2,15 +2,16 @@ import * as type from '../actions/types'
 
 const initialState = {
   count: 0,
-  isIncrementing: false
+  isIncrementing: false,
+  posts: []
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case type.INCREMENT_REQUESTED:
+    case type.FETCH_POSTS_SUCCESS:
       return {
         ...state,
-        isIncrementing: true
+        posts: action.payload
       }
 
     case type.INCREMENT:
